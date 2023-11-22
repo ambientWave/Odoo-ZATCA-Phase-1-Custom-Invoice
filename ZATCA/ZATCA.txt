@@ -1,0 +1,12 @@
+https://sandbox.zatca.gov.sa/
+https://sandbox.zatca.gov.sa/DeveloperPortalSupport
+https://sandbox.zatca.gov.sa/downloadSDK
+https://zatca.gov.sa/ar/E-Invoicing/SystemsDevelopers/Documents/20220624_ZATCA_Electronic_Invoice_Security_Features_Implementation_Standards.pdf
+https://zatca.gov.sa/ar/E-Invoicing/SystemsDevelopers/Documents/20220624_ZATCA_Electronic_Invoice_XML_Implementation_Standard_vF.pdf
+https://sandbox.zatca.gov.sa/Compliance
+https://sandbox.zatca.gov.sa/IntegrationSandbox
+https://zatca.gov.sa/ar/E-Invoicing/SystemsDevelopers/Documents/20230519_ZATCA_Electronic_Invoice_XML_Implementation_Standard_%20vF.pdf
+https://zatca.gov.sa/ar/E-Invoicing/SystemsDevelopers/Documents/QRCodeCreation.pdf
+https://mcusercontent.com/a90cefeb037ed376188308d34/files/2ca406b2-8627-66d9-45a4-94d186a4f3a5/User_Manual_Software_Development_Kit_SDK_.01.pdf
+https://openjdk.org/install/
+https://www.youtube.com/watch?v=TksD-8s2x-g

@@ -1,0 +1,221 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <template id="report_moncp_invoice">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="d">
+                <t t-call="web.basic_layout">
+                    <div class="page">
+                        <div t-attf-class="header">
+                            <center>
+                                <span>
+                                    <img
+                                        t-att-src="'/moncp_custom_invoice_report/static/src/img/logo.png'"
+                                        style="position: absolute;left: 430px;z-index: -1;display: inline"
+                                        height="150" />
+                                </span>
+                            </center>
+                            <p style="text-align:left;">
+                                Manufacturer of Natural care Products For the Industry
+                                <span style="float:right;">
+                                    مصنع مستحضرات العناية الطبيعية للصناعة
+                                </span>
+                            </p>
+                            <p style="text-align:left;">
+                                Deposit and remanufacturing area
+                                <span style="float:right;">
+                                    منطقة الإيداع وإعادة التصنيع
+                                </span>
+                            </p>
+                            <p style="text-align:left;">
+                                Industrial cities oasis
+                                <span style="float:right;">
+                                    واحة مدن الصناعية
+                                </span>
+                            </p>
+                            <p style="border-bottom: 3px solid #000;text-align:left;">
+                                Vat No: <span t-field="d.company_id.vat"/>
+                                <span style="float:right;">
+                                   <span t-field="d.company_id.vat"/> :الرقم الضريبي
+                                </span>
+                            </p>
+                        
+                        </div>
+                        <div/>
+                        <p style="text-align:left;">
+                            Tax Invoice Serial: <span t-field="d.name"/>
+                            <span style="float:right;">
+                                <span t-field="d.name"/>:فاتورة ضريبية مسلسل
+                            </span>
+                        </p>
+                        <br/>
+                        <table style="border: 1px solid black;border-collapse: collapse;width:100%;">
+                            <tbody style="text-align: center;border: 1px solid black;border-collapse: collapse;"><tr style="border: 1px solid black;border-collapse: collapse;">
+                            <th style="border: 1px solid black;border-collapse: collapse;">Date</th>
+                            <td style="border: 1px solid black;border-collapse: collapse;"><center><span t-field="d.invoice_date"/></center></td>
+                            <th style="border: 1px solid black;border-collapse: collapse;">التاريخ</th>
+                            </tr>
+                            <tr style="border: 1px solid black;border-collapse: collapse;">
+                            <th style="border: 1px solid black;border-collapse: collapse;">Customer Name</th>
+                            <td style="border: 1px solid black;border-collapse: collapse;"><span t-field="d.partner_id.display_name"/></td>
+                            <th style="border: 1px solid black;border-collapse: collapse;">اسم العميل</th>
+                            </tr>
+                            <tr style="border: 1px solid black;border-collapse: collapse;">
+                            <th style="border: 1px solid black;border-collapse: collapse;">Address</th>
+                            <td style="border: 1px solid black;border-collapse: collapse;"><t t-if="d.partner_id.street"><span t-field="d.partner_id.street"/>, </t><t t-if="d.partner_id.city"><span t-field="d.partner_id.city"/>, </t><t t-if="d.partner_id.state_id.name"><span t-field="d.partner_id.state_id.name"/>, </t><t t-if="d.partner_id.country_id.name"><span t-field="d.partner_id.country_id.name"/></t></td>
+                            <th style="border: 1px solid black;border-collapse: collapse;">العنوان</th>
+                            </tr>
+                            <tr style="border: 1px solid black;border-collapse: collapse;">
+                            <th style="border: 1px solid black;border-collapse: collapse;">Call Number</th>
+                            <td style="border: 1px solid black;border-collapse: collapse;"><span t-field="d.partner_id.phone"/></td>
+                            <th style="border: 1px solid black;border-collapse: collapse;">رقم التواصل</th>
+                            </tr>
+                            </tbody>
+                        </table>
+                        <div>
+                        <div>
+                        <table style="position: relative;top: 20px;border: 1px solid black;border-collapse: collapse;width:100%;">
+                            <tr style="border: 1px solid black;border-collapse: collapse;white-space: pre-line">
+                                <th style="border: 1px solid black;border-collapse: collapse;">السعر الاجمالي
+                                Total Price</th>
+                                <th style="border: 1px solid black;border-collapse: collapse;">قيمة الضريبة
+                                VAT Amount</th>
+                                <th style="border: 1px solid black;border-collapse: collapse;">مبلغ
+                                Amount</th>
+                                <th style="border: 1px solid black;border-collapse: collapse;">الضرائب
+                                Taxes</th>
+                                <th style="border: 1px solid black;border-collapse: collapse;">سعرالوحدة
+                                Unit Price</th>
+                                <th style="border: 1px solid black;border-collapse: collapse;">الكمية
+                                Quantity</th>
+                                <th style="border: 1px solid black;border-collapse: collapse;">الوصف
+                                Description</th>
+                            </tr>
+                        <t t-foreach="d.invoice_line_ids" t-as="invLine">
+                            <t t-set="taxedValue" t-value="invLine.price_total - invLine.price_subtotal"></t>
+                            <tr style="text-align: center;border: 1px solid black;border-collapse: collapse;">
+                                <td style="border: 1px solid black;border-collapse: collapse;background-color: #e6e6e6;"><t t-out="invLine.price_total"/></td>
+                                <td style="border: 1px solid black;border-collapse: collapse;"><t t-out="'%.2f'%(taxedValue)"/></td> <!-- t-out is to be used in loops. t-esc is to be used without loops -->
+                                <td style="border: 1px solid black;border-collapse: collapse;background-color: #e6e6e6;"><t t-out="invLine.price_subtotal"/></td>
+                                <td style="border: 1px solid black;border-collapse: collapse;"><t t-out="invLine.tax_ids.name"/></td>
+                                <td style="border: 1px solid black;border-collapse: collapse;"><t t-out="invLine.price_unit"/></td>
+                                <td style="border: 1px solid black;border-collapse: collapse;"><t t-out="invLine.quantity"/></td>
+                                <td style="border: 1px solid black;border-collapse: collapse;"><t t-out="invLine.name"/></td>
+                            </tr>
+                        </t>
+                        </table>
+                        </div>
+                        <br/>
+                        <div>
+                            <table style="text-align: center;position: relative;top: 70px;border: 1px solid black;border-collapse: collapse;">
+                                <tbody>
+                                <tr style="border: 1px solid black;border-collapse: collapse;">
+                                <td style="border: 1px solid black;border-collapse: collapse;"><span t-field="d.amount_untaxed"/></td>
+                                <th style="border: 1px solid black;border-collapse: collapse;width: 270px">Subtotal / اﻹﺟﻤﺎﻟﻲ اﻟﻔﺮﻋﻲ</th>
+                                </tr>
+                                <tr style="border: 1px solid black;border-collapse: collapse;">
+                                <td style="border: 1px solid black;border-collapse: collapse;color: white;background-color: #000000;"><span t-field="d.amount_tax"/></td>
+                                <th style="border: 1px solid black;border-collapse: collapse;color: white;background-color: #000000;">VAT / قيمة الضرائب</th>
+                                </tr>                  
+                                <tr style="border: 1px solid black;border-collapse: collapse;">
+                                <td style="border: 1px solid black;border-collapse: collapse;color: white;background-color: #5d7a55;"><span t-field="d.amount_total"/></td>
+                                <th style="border: 1px solid black;border-collapse: collapse;color: white;background-color: #5d7a55;">Total / اﻟﻤﺠﻤﻮع</th>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        </div>
+                        <div style="display:block; position:relative;top:120px;width:97%;"> <!-- relative 170-->
+                            <p style="text-align:left;">
+                                Accountant:
+                                <span style="float:right;">
+                                    :المحاسب
+                                </span>
+                            </p>
+                            <br/>
+                            <p style="text-align:left;">
+                                Signature:
+                                <span style="float:right;">
+                                    :التوقيع
+                                </span>
+                            </p>
+                            <br/>
+                            <p style="text-align:left;">
+                                Recipient:
+                                <span style="float:right;">
+                                    :المستلم
+                                </span>
+                            </p>                            
+                        </div>
+                        <br/>
+                        
+                        <div t-attf-class="footer" style="border-top: 3px solid #000000;width:100%;">
+                            <br/>
+                            <p style="text-align:left;">
+                                Industrial Cities Oasis, Yanbu Sea, K.S.A
+                                <span style="float:right;">
+                                    واحة مدن الصناعية - ينبع البحر - المملكة العربية السعودية
+                                </span>
+                            </p>
+                            <center><img t-att-src="'/report/barcode/?barcode_type=QR&amp;value='+d.einv_sa_qr_code_str+'&amp;width=130&amp;height=130'"
+                            style="position: absolute;left: 400px;z-index: -1;display: inline; width:130px;height:130px;"/></center>
+                            <p style="text-align:left;">
+                                Bank Account: Al Rajhi Bank - 150608010673760
+                                <span style="float:right;">
+                                حساب بنكي:مصرف الراجحي - ١٥٠٦٠٨٠١٠٦٧٣٧٦٠
+                                </span>
+                            </p>
+                            <p style="text-align:left;">
+                                IBAN: SA9380000150608010673760
+                                <span style="float:right;">
+                                SA9380000150608010673760 :ايبان
+                                </span>
+                            </p>                            
+                            <p style="text-align:left;">
+                                Phone No.: <span t-field="d.company_id.phone"/>
+                                <span style="float:right;">
+                                <span t-field="d.company_id.phone"/>:الهاتف
+                                </span>
+                            </p>                  
+                            <p style="text-align:left;">
+                                Website: <span t-field="d.company_id.website"/>
+                                <span style="float:right;">
+                                <span t-field="d.company_id.website"/>:الموقع الالكتروني
+                                </span>
+                            </p>                                 
+                        </div>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+    <record id="paperformat_moncp_invoice_layout"
+            model="report.paperformat">
+        <field name="name">European A4</field>
+        <field name="default" eval="True"/>
+        <field name="format">A4</field>
+        <field name="page_height">0</field>
+        <field name="page_width">0</field>
+        <field name="orientation">Portrait</field>
+        <field name="margin_top">50</field>
+        <field name="margin_bottom">50</field>
+        <field name="margin_left">5</field>
+        <field name="margin_right">5</field>
+        <field name="header_line" eval="False"/> <!-- horizontal line above header -->
+        <field name="header_spacing">43</field> <!-- 43 -->
+        <field name="dpi">96</field>
+    </record>
+
+    <record id="report_moncp_custom_invoice" model="ir.actions.report">
+        <field name="name">MONCP Tax Invoice</field>
+        <field name="print_report_name">(object._get_report_base_filename())</field>
+        <field name="paperformat_id" ref="moncp_custom_invoice_report.paperformat_moncp_invoice_layout"/>
+        <field name="model">account.move</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">moncp_custom_invoice_report.report_moncp_invoice</field>
+        <field name="report_file">moncp_custom_invoice_report.report_moncp_invoice</field>
+        <field name="binding_model_id" ref="account.model_account_move"/>
+        <field name="binding_type">report</field>
+    </record>
+
+</odoo>
