@@ -94,13 +94,25 @@
                         <t t-foreach="d.invoice_line_ids" t-as="invLine">
                             <t t-set="taxedValue" t-value="invLine.price_total - invLine.price_subtotal"></t>
                             <tr style="text-align: center;border: 1px solid black;border-collapse: collapse;">
-                                <td style="border: 1px solid black;border-collapse: collapse;background-color: #e6e6e6;"><t t-out="invLine.price_total"/></td>
-                                <td style="border: 1px solid black;border-collapse: collapse;"><t t-out="'%.2f'%(taxedValue)"/></td> <!-- t-out is to be used in loops. t-esc is to be used without loops -->
-                                <td style="border: 1px solid black;border-collapse: collapse;background-color: #e6e6e6;"><t t-out="invLine.price_subtotal"/></td>
-                                <td style="border: 1px solid black;border-collapse: collapse;"><t t-out="invLine.tax_ids.name"/></td>
-                                <td style="border: 1px solid black;border-collapse: collapse;"><t t-out="invLine.price_unit"/></td>
-                                <td style="border: 1px solid black;border-collapse: collapse;"><t t-out="invLine.quantity"/></td>
-                                <td style="border: 1px solid black;border-collapse: collapse;"><t t-out="invLine.name"/></td>
+                                <t t-if="invLine.display_type == 'line_section'">
+                                    <td colspan="99">
+                                        <span t-field="invLine.name" t-options="{'widget': 'text'}"/>
+                                    </td>
+                                </t>
+                                <t t-if="invLine.display_type == 'line_note'">
+                                    <td colspan="99">
+                                        <span t-field="invLine.name" t-options="{'widget': 'text'}"/>
+                                    </td>
+                                </t>
+                                <t t-if="(invLine.display_type) == 'product'">
+                                    <td style="border: 1px solid black;border-collapse: collapse;background-color: #e6e6e6;"><t t-esc="invLine.price_total"/></td>
+                                    <td style="border: 1px solid black;border-collapse: collapse;"><t t-out="'%.2f'%(taxedValue)"/></td> <!-- t-out is to be used in loops. t-esc is to be used without loops -->
+                                    <td style="border: 1px solid black;border-collapse: collapse;background-color: #e6e6e6;"><t t-out="invLine.price_subtotal"/></td>
+                                    <td style="border: 1px solid black;border-collapse: collapse;"><t t-out="invLine.tax_ids.name"/></td>
+                                    <td style="border: 1px solid black;border-collapse: collapse;"><t t-out="invLine.price_unit"/></td>
+                                    <td style="border: 1px solid black;border-collapse: collapse;"><t t-out="invLine.quantity"/></td>
+                                    <td style="border: 1px solid black;border-collapse: collapse;"><t t-out="invLine.name"/></td>
+                                </t>
                             </tr>
                         </t>
                         </table>
